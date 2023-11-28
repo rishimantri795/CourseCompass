@@ -1,3 +1,3 @@
 # CourseCompass
 
-Chat with Class Syllabi!
+Chat with Class Syllabi & Learn about your Pre-Requisites!
