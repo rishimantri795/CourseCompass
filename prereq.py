@@ -9,7 +9,7 @@ def requisites():
 
     while(yes == 'y'):
 
-        class_name = input("What class do you want to know the prerequisites for (enter course number?) ")
+        class_name = input("What class do you want to know more about (enter course number?) ")
 
         with open('ece-undergrad-courses.csv', newline='') as csvfile: 
             reader = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -47,7 +47,6 @@ def requisites():
                                 names = rows[1]
                                 print(names)
                                 break
-
                 else:
                     print("No text found after the target string.")
             else:
@@ -55,8 +54,6 @@ def requisites():
 
             print("\n")
             yes = input("Do you want to know the prerequisites for another class? (y/n) ")
-
     
-
-
-    
+#ask for course chatting or course exploration. In course exploration, you can explore multiple courses and compare them. 
+#you can get details like the prerequisites, the number of credits, description, required textbooks, etc.

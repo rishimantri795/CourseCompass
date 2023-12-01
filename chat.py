@@ -7,29 +7,20 @@ from langchain.chat_models import ChatOpenAI
 from langchain.schema.runnable import RunnablePassthrough
 from prereq import requisites
 from chatMajor import majorChat
+from newReq import newReq
 
-#loop to keep asking questions
-#do user validation
-#add more courses
-#add more questions
-#add more answers
-#add more prompts
-#figure out how to keep and return context
-#program catalogs? 
-#calendar integration
-#Instructor Profiles
 
-#ask program catalog, ask course syllabus, find prerequisites, course compare, 
+#input validation
 
-task = int(input("What do you want to do today? Enter '1' for Chatting with Program Catalogs, '2' for Chatting with a Course Syllabus, '3' for Finding Course Prerequisites \n"))
+task = int(input("What do you want to do today? Enter '1' for Chatting with Major Requirements, '2' for Chatting with an Existing Course Syllabus, '3' for Exploring New Courses \n"))
 
 if (task == 1):
     majorChat()
 
-elif (task == 2):
-    requisites()
-
 elif (task == 3):
+    newReq()
+
+elif (task == 2):
 
     repeat = True
 
@@ -87,3 +78,19 @@ elif (task == 3):
             result = rag_chain.invoke(question)
 
             print(result)
+else:
+    print("Invalid input. Please enter a valid input.")
+
+
+#loop to keep asking questions
+#do user validation
+#add more courses
+#add more questions
+#add more answers
+#add more prompts
+#figure out how to keep and return context
+#program catalogs? 
+#calendar integration
+#Instructor Profiles
+
+#ask program catalog, ask course syllabus, find prerequisites, course compare, 

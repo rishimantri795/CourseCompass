@@ -1,3 +1,3 @@
 # CourseCompass
 
-Chat with Class Syllabi & Learn about your Pre-Requisites!
+Chat with Class Syllabi, Major Requirements & Learn about your Pre-Requisites!
