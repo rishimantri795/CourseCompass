@@ -10,6 +10,15 @@ class GUIApp:
         self.master = master
         self.master.title("Class Number GUI")
 
+        self.label_dropdown = tk.Label(master, text="Choose Subject:")
+        self.label_dropdown.pack()
+
+        self.selected_option2 = tk.StringVar()
+        self.dropdown = ttk.Combobox(master, textvariable=self.selected_option2, state="readonly")
+        self.dropdown.pack()
+
+        self.dropdown['values'] = tuple(self.get_subjects())
+
         # Create and set up widgets
         self.label = tk.Label(master, text="Enter Class Number:")
         self.label.pack()
@@ -20,7 +29,7 @@ class GUIApp:
         self.button = tk.Button(master, text="Submit", command=self.show_outputs)
         self.button.pack()
 
-        self.label_dropdown = tk.Label(master, text="Choose from the list (will populate on submission):")
+        self.label_dropdown = tk.Label(master, text="Choose instructor from the list (will populate on submission):")
         self.label_dropdown.pack()
 
         # Create a StringVar to store the selected option
@@ -36,14 +45,26 @@ class GUIApp:
         self.output_listbox = tk.Listbox(master)
         self.output_listbox.pack()
 
-        
+    def get_subjects(self):
+        subjects = []
 
+        with open('allgrades.csv', 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == 'Subject' or row[0] == '':
+                    pass
+                else:
+                    subjects.append(row[0])
+        return subjects
+
+        # Replace this with your own logic for generating dropdown options
+        return subjects
+        
     def show_outputs(self):
         # Get class number from the entry widget
-
         class_number = self.entry.get()
-
         instructor = self.selected_option.get()
+        subject = self.selected_option2.get()
 
         # Validate input
         if not class_number.isdigit():
@@ -55,19 +76,40 @@ class GUIApp:
         self.dropdown['values'] = ()
 
         # Generate and display list of outputs
-        outputs = self.generate_outputs(int(class_number), instructor)
+        outputs = self.generate_outputs(int(class_number), instructor, subject)
         for output in outputs:
             self.output_listbox.insert(tk.END, output)
 
         # Populate drop-down list with options
         self.dropdown['values'] = tuple(self.generate_dropdown_options(class_number))
 
-    def generate_outputs(self, class_number, instructor):
+    def generate_outputs(self, class_number, instructor,subject):
 
+        with open('allgrades.csv', 'r') as file:
+            j = 0
+            mydata = []
+            reader = csv.reader(file)
+            start_reading2 = False
+            start2 = 0
+            for row in reader:
+                j += 1
+                if start_reading2:
+                    if row[0] != str(subject) and row[0] != '':
+                        break
+                    mydata.append(row)
+                elif row[0] == str(subject):
+                    start2 = j
+                    start_reading2 = True
+                    mydata.append(row)
+        df = pd.DataFrame(mydata)
+        df.to_csv('subjectdata.csv', index=False)
+
+
+          
         def read_csv_data(class_number):
             i = 0
             start = 0
-            with open('ece_gradeDistro (1).csv', 'r') as file:
+            with open('subjectdata.csv', 'r') as file:
                 reader = csv.reader(file)
                 data = []
                 start_reading = False
@@ -75,13 +117,14 @@ class GUIApp:
                 for row in reader:
                     i += 1
                     if start_reading:
-                        if row[1] != str(class_number) and row[1] != '':
+                        if row[2] != str(class_number) and row[2] != '':
                             break
                         data.append(row)
-                    elif row[1] == str(class_number):
+                    elif row[2] == str(class_number):
                         start = i
                         start_reading = True
                         data.append(row)
+            print(data)
             df = pd.DataFrame(data)
             df.to_csv('classdata.csv', index=False)
                     
@@ -100,17 +143,18 @@ class GUIApp:
                 if row[1] == '1':
                     pass
                 else:
-                    if row[7] not in all_instructors:
-                        all_instructors.append(row[7])
-                        for i in range(8,24):
+                    if row[8] not in all_instructors:
+                        all_instructors.append(row[8])
+                        for i in range(9,25):
                             if row[i] == '':
                                 value = 0
                             else:
                                 value = float(re.search(r'\d+\.\d+',row[i]).group())
                             gradeLevels.append(value)
-                        dict_instructor_grades.update({row[7]:gradeLevels})  
+                        dict_instructor_grades.update({row[8]:gradeLevels})  
             print(dict_instructor_grades)
 
+        
         if instructor not in all_instructors:
             instructor = 'All'
 
@@ -120,18 +164,18 @@ class GUIApp:
             with open('classdata.csv', 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    
                     if row[1] == '1':
                         pass
                     else:
                         index +=1
-                        for i in range(8,24):
+                        for i in range(9,25):
                             if row[i] == '':
                                 value = 0
                             else:
+                                print(row[i])
                                 value = float(re.search(r'\d+\.\d+',row[i]).group())
 
-                            grades[i-8][index] = value
+                            grades[i-9][index] = value
 
             averages = np.zeros(16)
             for i in range(0,16):
@@ -171,10 +215,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 
-
-
-
-
-
-
-        
+#implement averages for each instructor, implement for all Purdue classes/departments
