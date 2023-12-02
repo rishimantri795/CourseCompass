@@ -204,7 +204,7 @@ class GUIApp:
                     pass
                 else:
                     if row[7] not in instructors:
-                        instructors.append(row[7])
+                        instructors.append(row[8])
         
         # Replace this with your own logic for generating dropdown options
         return instructors
