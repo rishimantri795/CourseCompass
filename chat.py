@@ -5,7 +5,6 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain import hub
 from langchain.chat_models import ChatOpenAI
 from langchain.schema.runnable import RunnablePassthrough
-from prereq import requisites
 from chatMajor import majorChat
 from newReq import newReq
 
