@@ -24,27 +24,36 @@ elif (task == 2):
     repeat = True
 
     while (repeat):
+        valid = False
+        while (valid == False):
 
-        course = input("What course are you interested in learning more about? Type q to quit: ")
+            course = input("What course are you interested in learning more about? Type q to quit: ")
+
+            if (course == 'q'):
+                repeat = False
+                break
+
+            if course == "PHYS 172" or course == "PHYS172" or course == 'phys 172' or course == 'phys172':
+                loader = PyPDFLoader("PHYS172_F23_Syllabus&Schedule_2023-10-05.pdf")
+                valid = True
+                
+            elif course == "MA 261" or course == "MA261" or course == 'ma 261' or course == 'ma261':
+                loader = PyPDFLoader("syllabus_ma261_fa23.pdf")
+                valid = True
+
+            elif course == "CS 159" or course == "CS159" or course == 'cs 159' or course == 'cs159':
+                loader = PyPDFLoader("syllabus.pdf")
+                valid = True
+
+            elif course == "ENGR 133" or course == "ENGR133" or course == 'engr 133' or course == 'engr133':
+                loader = PyPDFLoader("ENGR 133_Fa23_Syllabus_V4.pdf")
+                valid = True   
+
+            else:
+                print("Sorry, we don't have that course in our database. Try PHYS 172, MA 261, CS 159, or ENGR 133.")
 
         if (course == 'q'):
-            repeat = False
             break
-
-        if course == "PHYS 172" or course == "PHYS172" or course == 'phys 172' or course == 'phys172':
-            loader = PyPDFLoader("PHYS172_F23_Syllabus&Schedule_2023-10-05.pdf")
-            
-        elif course == "MA 261" or course == "MA261" or course == 'ma 261' or course == 'ma261':
-            loader = PyPDFLoader("syllabus_ma261_fa23.pdf")
-
-        elif course == "CS 159" or course == "CS159" or course == 'cs 159' or course == 'cs159':
-            loader = PyPDFLoader("syllabus.pdf")
-
-        elif course == "ENGR 133" or course == "ENGR133" or course == 'engr 133' or course == 'engr133':
-            loader = PyPDFLoader("ENGR 133_Fa23_Syllabus_V4.pdf")
-
-        else:
-            loader = PyPDFLoader("Program_ Computer Engineering, BSCMPE - Purdue University - Acalog ACMS™.pdf")
 
         # Split documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)

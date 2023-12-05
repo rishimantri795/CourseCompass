@@ -4,6 +4,7 @@ import csv
 import re
 from distributions import GUIApp
 import tkinter as tk
+import pandas as pd
 
 def newReq():
 
@@ -14,20 +15,49 @@ def newReq():
         with open('ece-undergrad-courses.csv', newline='') as csvfile: 
             reader = csv.reader(csvfile, delimiter=',', quotechar='"')
 
-            csvfile.seek(0)
-            
-            course_name = input("What classes do you want to know more about (enter course number)? Enter 'd' for grade distributions by course & instructor. Enter q to quit. \n")
-            print("\n")
+            valid = False
 
-            if course_name == 'd':
-                root = tk.Tk()
-                app = GUIApp(root)
-                root.mainloop()
-                break
+            while (valid == False):
+
+                csvfile.seek(0)
+                course_name = input("What classes do you want to know more about (enter an ECE course number)? Enter 'd' for grade distributions by course & instructor. Enter q to quit. \n")
+                print("\n")
+
+                if course_name == 'd':
+                    root = tk.Tk()
+                    app = GUIApp(root)
+                    root.mainloop()
+                    break
+                    
+                elif course_name == 'q':
+                    break
+
+                elif course_name.isalpha():
+                    print("Please enter a valid class number.")
+                    valid = False
+
+                elif course_name.isnumeric() == False:
+                    print("Please enter a valid class number.")
+                    valid = False
+
+                else:
+
+                    class_names = [int(num) for num in course_name.split(',')]
+
+                    ececourses = pd.read_csv('ece-undergrad-courses.csv')
+                    ececourses = ececourses['Course Number'].tolist()
+                    for i in class_names:
+                        if i not in ececourses:
+                            print(f"ECE {i} is not a valid class.")
+                            valid = False
+                            break
+                        else:
+                            valid = True
+
             if course_name == 'q':
                 break
-
-            class_names = [int(num) for num in course_name.split(',')]
+            if course_name == 'd':
+                break
 
             i = 0
 

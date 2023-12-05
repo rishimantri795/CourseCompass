@@ -126,7 +126,7 @@ class GUIApp:
 
             if data == []:
                 messagebox.showerror("Error", "Please enter a valid class number.")
-                return
+                return 0,0,[]
                     
             return i-1,start,data
                   
@@ -209,6 +209,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = GUIApp(root)
     root.mainloop()
-
 
 #implement averages for each instructor
