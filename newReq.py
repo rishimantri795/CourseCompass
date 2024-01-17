@@ -1,3 +1,34 @@
+"""
+===============================================================================
+ENGR 13300 Fall 2023
+
+Program Description
+    Asks user input for the ECE course number and displays the course description, prerequisites, required and recommended textbooks
+    
+Assignment Information
+    Assignment:     Individual Project
+    Author:         Rishi Mantri, mantrir@purdue.edu
+    Team ID:        LC4 - 10 
+
+Contributor:    Name, login@purdue [repeat for each]
+    My contributor(s) helped me:
+    [ ] understand the assignment expectations without
+        telling me how they will approach it.
+    [ ] understand different ways to think about a solution
+        without helping me plan my solution.
+    [ ] think through the meaning of a specific error or
+        bug present in my code without looking at my code.
+    Note that if you helped somebody else with their code, you
+    have to list that person as a contributor here as well.
+    
+ACADEMIC INTEGRITY STATEMENT
+I have not used source code obtained from any other unauthorized
+source, either modified or unmodified. Neither have I provided
+access to my code to another. The project I am submitting
+is my own original work.
+===============================================================================
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -20,7 +51,7 @@ def newReq():
             while (valid == False):
 
                 csvfile.seek(0)
-                course_name = input("What classes do you want to know more about (enter an ECE course number)? Enter 'd' for grade distributions by course & instructor. Enter q to quit. \n")
+                course_name = input("What class do you want to know more about (enter an ECE course number)? Enter 'd' for grade distributions by course & instructor. Enter q to quit. \n")
                 print("\n")
 
                 if course_name == 'd':

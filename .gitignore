@@ -1,3 +1,4 @@
 reader.py
 .env
 selenium.py
+.streamlit
